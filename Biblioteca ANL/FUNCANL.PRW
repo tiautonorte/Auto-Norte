@@ -11,15 +11,15 @@
 /*
 24/09/2021
 Denisson Danilo
---Função para verificar e criar diretorio de arquivos
-Parametros da Função:
+--Funï¿½ï¿½o para verificar e criar diretorio de arquivos
+Parametros da Funï¿½ï¿½o:
 
 cPath - Caminho do diretorio ser verificado e criado
-lDrive - Flag para controlar a digitação da unidade de drive.
-lMSg - Flag para verificar se deve questionar sobre criar diretório
+lDrive - Flag para controlar a digitaï¿½ï¿½o da unidade de drive.
+lMSg - Flag para verificar se deve questionar sobre criar diretï¿½rio
 
-Returno da Função:
-Retorna .T. quando o diretorio for criado e .F. quando não conseguiu criar
+Returno da Funï¿½ï¿½o:
+Retorna .T. quando o diretorio for criado e .F. quando nï¿½o conseguiu criar
 */
 User Function CriaDirt( cPath, lDrive, lMSg )
     //Local aDir
@@ -35,7 +35,7 @@ User Function CriaDirt( cPath, lDrive, lMSg )
     
     cPath := Alltrim(cPath)
     If Subst(cPath,2,2) <> ":" .AND. lDrive
-        MsgInfo("Unidade de drive não especificada") //Unidade de drive n?o especificada
+        MsgInfo("Unidade de drive nï¿½o especificada") //Unidade de drive n?o especificada
         lRet:=.F.
     Else
         cPath := If(Right(cPath,1) == "", Left(cPath,Len(cPath)-1), cPath)
@@ -63,11 +63,11 @@ Return lRet
 /*
 24/09/2021
 Denisson Danilo
---Função para calcular o Digito verificador em Modulo 10
-Parametros da Função:
+--Funï¿½ï¿½o para calcular o Digito verificador em Modulo 10
+Parametros da Funï¿½ï¿½o:
 cData - String com os numeros que devera calcular o digito verificador em Modulo 10
 
-Retorno da Função:
+Retorno da Funï¿½ï¿½o:
 Retorno o digito verificardo em Modulo 10
 */
 User Function CalcMd10(cData)
@@ -94,4 +94,5 @@ User Function CalcMd10(cData)
     _nDV  := 10 - Mod(_nSoma,10)
     _nDV  := IIF( _nDV==10, 0, _nDV )
     _cDv  :=    Alltrim(Str(_nDV))
+    
 Return(_cDV)
