@@ -46,7 +46,6 @@ User Function ImpFileTXT(_lJob, _cEmpresa, _cFil,_cTabOri, aSelFil, _cFileTab, c
 	Private _nPosGRP := 0
 	Private _nPosSGP := 0
 	Private _nPosUNP := 0
-	Private _nPosRep := 0
 	
 	If _lJob
 		// Seta job para nao consumir licensas
@@ -120,10 +119,6 @@ User Function ImpFileTXT(_lJob, _cEmpresa, _cFil,_cTabOri, aSelFil, _cFileTab, c
 					Endif
 					If "UNP" == UPPER(Alltrim((_aCabec[nX])))
 						_nPosUNP := nx
-						_nMaior  := nx
-					Endif
-					If "REP" $ UPPER(Alltrim((_aCabec[nX])))
-						_nPosREP := nx
 						_nMaior  := nx
 					Endif
 				Next nX
@@ -347,9 +342,6 @@ If nPrvBrt > 0
 		Replace Z3_PISCOF	with _nPisCOF
 		Replace Z3_TES		with cTES
 		Replace Z3_PRCREP	with _nCusto
-    	If _nPosREP > 0
-        	Replace Z3_PRCREP	with aDados[nJ,_nPosREP]
-	    Endif
 		Replace Z3_ICMSRET	with _nICMRET
 		Replace Z3_CODTAB	with cCodTab
 		Replace Z3_MONOFAS	with _cMonoFas
@@ -559,9 +551,6 @@ If nJ > 0
 	Replace Z3_PISCOF	with _nPisCOF
 	Replace Z3_TES		with cTES
 	Replace Z3_PRCREP	with _nCusto
-   	If _nPosREP > 0
-       	Replace Z3_PRCREP	with Val(aDados[nJ,_nPosREP])
-    Endif
 	Replace Z3_ICMSRET	with _nICMRET
 	Replace Z3_CODTAB	with cCodTab
 	Replace Z3_MONOFAS	with _cMonoFas
@@ -585,10 +574,6 @@ If nJ > 0
 	If _nPosSGP > 0
 		Replace Z3_SUBGRP	with aDados[nJ,_nPosSGP]
 	Endif
-	If _nPosREP > 0
-     	Replace Z3_PRCREP	with aDados[nJ,_nPosREP]
-	Endif
-
 	MsUnLock()
 EndIf
 Return

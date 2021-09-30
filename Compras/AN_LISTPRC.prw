@@ -203,9 +203,6 @@ Static Function AN_IMPPRC
 	Local aSelArq  := {}
 	Local _cTabOri := CriaVar("Z2_CODTAB",.F.)
 	Local _cDscOri := CriaVar("Z2_DESCTAB",.F.)
-	Local _cModRep := '1' // Modalidade de cáclulo do preços de reposição
-	Local _aModRep := {'Calculo por TES','Calculo pelo CSV'}
-
 	aadd(_aSelFil, "Filial Corrente")
 	aadd(_aSelFil, "Seleciona Filiais")
 
@@ -2351,8 +2348,6 @@ Static Function APLICPOL(_aFilPol, lEnd, _cCodEsp)
 	Local nValICMRET := 0
 	Local nBaseSol   := 0
 	Local nTotcSOL   := 0
-	Local _nPrcRep   := 0
-
 	Default _cCodEsp := CriaVar("B1_COD",.F.)
 	ProcRegua(Len(_aFilPol))
 	For nH:=1 to Len(_aFilPol)
@@ -2431,7 +2426,6 @@ Static Function APLICPOL(_aFilPol, lEnd, _cCodEsp)
 				nMargMK	   := SZ3->Z3_MARGEM
 				nTotcSOL   := SZ3->Z3_VLRTOT
 				nMargem	   := SZ3->Z3_MVAST
-				_nPrcRep   := SZ3->Z3_PRCREP
 				_nMarKup   := 0
 				_nFator    := 1
 				nPos       := 0
@@ -2458,10 +2452,6 @@ Static Function APLICPOL(_aFilPol, lEnd, _cCodEsp)
 							_nPisCOF := 0
 							_nICMRET := 0
 						Endif
-						IF _nPrcRep > 0
-						  _nCusto  := _nPrcRep 
-						ENDIF
-
 						_cMonoFas  := IIF(SB1->B1_XMONO=="S","S","N")
 						_cLinhaSB1 := SB1->B1_XLINHA
 						_nMargem   := 0
