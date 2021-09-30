@@ -22,6 +22,7 @@ User Function FA200FIL()
     Local cArqLog   := "M:\DEPTOS\Contas a Receber\Contas a Receber\Arquivos CNAB Cobranca\Retorno\LOGs\"+cNomeArq+"_log.csv"
     Local nCount    := 0
     Local aAreaSE1  := SE1->(GetArea())
+    //Local nQtd      := 0
 
 
     dbSelectArea( "SX5" )
@@ -153,7 +154,7 @@ User Function FA200FIL()
         If cBanco == "422"
             cQuery += " AND SUBSTR(E1_NUMBCO,1,9) = '"+cNsNum+"' "
         elseif cBanco = "341" // Tratamento do Banco Itau
-		    cQuery += " AND SUBSTR(E1_NUMBCO,1,8) = '"+SubStr(cNsNum,1,8)+"' "
+		    cQuery += " AND E1_XBCOFAT = '341' AND SUBSTR(E1_NUMBCO,1,8) = '"+SubStr(cNsNum,1,8)+"' "
         Else
             cQuery += " AND E1_NUMBCO = '"+cNsNum+"' "
         EndIf
@@ -161,6 +162,14 @@ User Function FA200FIL()
         cQuery := ChangeQuery(cQuery)
 
         TCQUERY cQuery NEW ALIAS "QSE1"
+
+        nQtd := U_ContReg("QSE1")
+
+        /*
+        IF nQtd > 1
+            cMens := " 2 Registros."
+        Endif
+        */
 
         While !QSE1->(EOF())
             dbSelectArea("SE1")

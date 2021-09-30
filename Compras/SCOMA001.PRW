@@ -247,10 +247,10 @@ User Function IMP_XML(cDirXML,lJob)
 	Local aEmpAtu	:= FWSM0Util():GetSM0Data("01",,{"M0_CGC"})
 	Local nX
 	Local nY
-	Local cUFORITR   := ""
-	Local cUFDESTR   := ""
-	Local cMUORITR   := ""
-	Local cMUDESTR   := ""
+	Local cUFORITR   := CriaVar("F1_UFORITR",.F.)
+	Local cUFDESTR   := CriaVar("F1_UFDESTR",.F.)
+	Local cMUORITR   := CriaVar("F1_MUORITR",.F.)
+	Local cMUDESTR   := CriaVar("F1_MUDESTR",.F.)
 	Local aErrNCM_EX := {}
 
 	Private _aERR 	:= {}
@@ -549,7 +549,7 @@ User Function IMP_XML(cDirXML,lJob)
 			If TYPE("oXML:"+_cCpoXML+":_IDE:_NCT:TEXT") <> "U"  // CTE
 				_cNota    := StrZero(Val(&("oXML:"+_cCpoXML+":_IDE:_NCT:TEXT")),TamSX3("F1_DOC")[1])
 
-				//Incluido por Andre Minelli em 29/06/2021
+				//Incluido por Andre Minelli em 29/06/2021 Alterado por Gustavo 23/09/2021
 				If TYPE("oXML:"+_cCpoXML+":_IDE:_UFINI:TEXT") <> "U" 
 					cUFORITR  := &("oXML:"+_cCpoXML+":_IDE:_UFINI:TEXT")
 				End If
@@ -557,10 +557,10 @@ User Function IMP_XML(cDirXML,lJob)
 					cUFDESTR  := &("oXML:"+_cCpoXML+":_IDE:_UFFIM:TEXT")
 				End If
 				If TYPE("oXML:"+_cCpoXML+":_IDE:_CMUNINI:TEXT") <> "U" 
-					cMUORITR  := &("oXML:"+_cCpoXML+":_IDE:_CMUNINI:TEXT")
+					cMUORITR  := SubStr(&("oXML:"+_cCpoXML+":_IDE:_CMUNINI:TEXT"),3,5)
 				End If
 				If TYPE("oXML:"+_cCpoXML+":_IDE:_CMUNFIM:TEXT") <> "U" 
-					cMUDESTR  := &("oXML:"+_cCpoXML+":_IDE:_CMUNFIM:TEXT")
+					cMUDESTR  := SubStr(&("oXML:"+_cCpoXML+":_IDE:_CMUNFIM:TEXT"),3,5)
 				End If
 			EndIf
 
@@ -843,7 +843,7 @@ User Function IMP_XML(cDirXML,lJob)
 			_dEmissao := Stod(StrTran(&("oXML:"+_cCpoXML+":_IDE:_DHEMI:TEXT"),"-",""))
 			_cNota    := StrZero(Val(&("oXML:"+_cCpoXML+":_IDE:_NCT:TEXT")),TamSX3("F1_DOC")[1])
 
-			//Incluido por Andre Minelli em 29/06/2021
+			//Incluido por Andre Minelli em 29/06/2021 Alterado por Gustavo 23/09/2021
 			If TYPE("oXML:"+_cCpoXML+":_IDE:_UFINI:TEXT") <> "U" 
 				cUFORITR  := &("oXML:"+_cCpoXML+":_IDE:_UFINI:TEXT")
 			End If
@@ -851,10 +851,10 @@ User Function IMP_XML(cDirXML,lJob)
 				cUFDESTR  := &("oXML:"+_cCpoXML+":_IDE:_UFFIM:TEXT")
 			End If
 			If TYPE("oXML:"+_cCpoXML+":_IDE:_CMUNINI:TEXT") <> "U" 
-				cMUORITR  := &("oXML:"+_cCpoXML+":_IDE:_CMUNINI:TEXT")
+				cMUORITR  := SubStr(&("oXML:"+_cCpoXML+":_IDE:_CMUNINI:TEXT"),3,5)
 			End If
 			If TYPE("oXML:"+_cCpoXML+":_IDE:_CMUNFIM:TEXT") <> "U" 
-				cMUDESTR  := &("oXML:"+_cCpoXML+":_IDE:_CMUNFIM:TEXT")
+				cMUDESTR  := SubStr(&("oXML:"+_cCpoXML+":_IDE:_CMUNFIM:TEXT"),3,5)
 			End If
 
 			If Type("oXML:_CTEPROC:_PROTCTE:_INFPROT:_CHCTE:TEXT") == "U"
@@ -1000,10 +1000,10 @@ User Function IMP_XML(cDirXML,lJob)
 		aadd(_aCabec,nTNF)		//21
 
 		//Incluido Andre Minelli 29/06/2021
-		aadd(_aCabec,cUFORITR)
-		aadd(_aCabec,cUFDESTR)
-		aadd(_aCabec,cMUORITR)
-		aadd(_aCabec,cMUDESTR)
+		aadd(_aCabec,cUFORITR)  //22
+		aadd(_aCabec,cUFDESTR)  //23
+		aadd(_aCabec,cMUORITR)  //24
+		aadd(_aCabec,cMUDESTR)  //25
 
 		_nLaco := IIF(Type("oXML:"+_cCpoXML+":_DET") == "A",Len(&("oXML:"+_cCpoXML+":_DET")),1)
 		_aItNF := {}
@@ -1809,6 +1809,11 @@ Static Function Grv_NFE(_aCabec,_aItNF,lFornDep,_aNFORI,lSaida,lEntrada)
 		Replace PB0_VALIPI	with _aCabec[19]
 		Replace PB0_DESPES	with _aCabec[20]
 		Replace PB0_VALBRU	with _aCabec[21]
+		//Gustavo Costa 23/09/21
+		Replace PB0_UFORIT 	with _aCabec[22]
+		Replace PB0_UFDEST	with _aCabec[23]
+		Replace PB0_MUORIT	with _aCabec[24]
+		Replace PB0_MUDEST	with _aCabec[25]
 		MsUnLock()
 
 		_nRecPB0 := PB0->(Recno())
